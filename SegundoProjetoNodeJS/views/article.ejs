@@ -1,0 +1,24 @@
+<%- include ('partials/_header.ejs') %>
+<%- include ('partials/_homenavbar.ejs') %>
+<body>
+<div class="container">
+    <hr>
+    
+        <div class="card">
+            <div class="card-header">
+                <h2><%=article.title%></h2>
+            </div>
+            <div class="card-body">
+                <!--utilizar o sinal de menos no link ao banco de dados para a formatação do TinyMCE aparecer-->
+                <%-article.body%>
+                <hr>
+                <a class="btn btn-primary" href="/">Voltar</a>
+            </div>
+
+        </div>
+   
+    
+</div>
+
+</body>
+<%- include ('partials/_footer.ejs') %>

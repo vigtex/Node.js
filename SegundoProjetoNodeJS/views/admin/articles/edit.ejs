@@ -1,0 +1,59 @@
+<%- include ('../../partials/_header.ejs') %>
+<%- include ('../../partials/_navbar.ejs') %>
+<body>
+    
+
+    <div class="container">
+    <hr>
+    <div class="card">
+    <div class="card-header">
+        <h2>Edição de artigo</h2>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="/articles/update">
+            <input type="hidden" name="id" value="<%=article.id%>">
+            <input name="title" class="form-control" type="text" placeholder="Defina o título do artigo" value="<%=article.title%>">
+        </br>
+            <textarea id="article" class='form-control' placeholder="Escreva aqui seu artigo" name="body"></textarea>
+        </br>
+        <label for="">Categoria</label>
+        <select name="category" id="" class="form-control">
+            <% categories.forEach((category) => {%>
+                <%if (category.id == article.categoryId) {%>
+                    <option value="<%=category.id%>" selected><%= category.title %></option>
+                <%}else{%>
+                    <option value="<%=category.id%>"><%= category.title %></option>
+                <%}%>
+                
+            <%})%>
+        </select>
+    </br>
+            <button class="btn btn-primary">Atualizar</button>
+            <a class='btn btn-primary' href="/admin/articles">Voltar</a>
+        </form>
+    </div>
+    </div>
+    </div>
+    <div id="fret" style="display:none" >
+        <%- article.body %>
+    </div>
+</body>
+<%- include ('../../partials/_footer.ejs') %>
+<!--importando o Jquery para edição-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--Chamando o tinymce-->
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+    //configurando o tinymce para a textarea (id->article)
+    tinymce.init({
+        language:'pt_BR',
+        selector: "#article",
+        plugins: [
+            'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
+        ],
+        init_instance_callback: () => {
+            //definindo o conteúdo da textarea, a ser editado pelo id
+            tinymce.get('article').setContent($('#fret').html())
+        }
+    })
+</script>

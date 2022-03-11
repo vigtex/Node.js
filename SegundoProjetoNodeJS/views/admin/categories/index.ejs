@@ -1,0 +1,58 @@
+<%- include ('../../partials/_header.ejs') %>
+<%- include ('../../partials/_navbar.ejs') %>
+<body>
+    
+
+    <div class="container">
+    <hr>
+    <div class="card">
+    <div class="card-header">
+        <h2>Categorias</h2>
+        <a href="/admin/categories/new" class="btn btn-primary">Criar nova categoria</a>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Slug</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% categories.forEach(category => {%>
+                    <tr>
+                        <td><%=category.id%></td>
+                        <td><%=category.title%></td>
+                        <td><%=category.slug%></td>
+                        <td>
+                            <a href="/admin/categories/edit/<%=category.id%>" class="btn btn-warning">Editar</a>
+                        <form action="/categories/delete" method="post" style="display: inline;" onsubmit="confirmaDel(event, this)">
+                            <input type="hidden" name="id" value="<%=category.id%>">
+                            <button class="btn btn-danger">Deletar</button>
+                        </form>
+                        </td>
+                    </tr>
+                <%})%>
+            </tbody>
+        </table>
+        
+    </div>
+    </div>
+    </div>
+    
+</body>
+<%- include ('../../partials/_footer.ejs') %>
+<script>
+    //função que irá confirmar se o usuário quer realmente deletar a categoria
+    function confirmaDel(event, form)
+    {
+        event.preventDefault()
+        var decision = confirm(`Você quer deletar esta categoria?`)
+        if(decision)
+        {
+            form.submit()
+        }
+    }
+</script>
